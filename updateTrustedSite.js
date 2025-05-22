@@ -24,12 +24,15 @@ async function updateTrustedSite(personId, trustedSite) {
   console.log('Update succeeded:', response.data.custom_fields.trustedsite);
 }
 
-// Example usage—replace with your actual Person ID and site:
+// Example usage via command-line arguments:
+// Run with: node updateTrustedSite.js <PersonID> <ReviewSite>
 (async () => {
-  // Paste your ID from the URL fragment after '/people/'
-  // e.g. URL: https://critik.outseta.com/#/app/crm/people/jW7A5LZQ
-  const personId  = 'jW7A5LZQ';
-  const reviewSite = 'Trustpilot';
+  const args = process.argv.slice(2);
+  if (args.length < 2) {
+    console.error('Usage: node updateTrustedSite.js <PersonID> <ReviewSite>');
+    process.exit(1);
+  }
+  const [personId, reviewSite] = args;
 
   try {
     await updateTrustedSite(personId, reviewSite);
