@@ -1,13 +1,12 @@
 // updateTrustedSite.js
-require('dotenv').config();             // Loads .env automatically
+require('dotenv').config();             // Loads .env
 const axios = require('axios');
 
 const BASE_URL = 'https://api.outseta.com/api/v1';
 const { OUTSETA_API_KEY, OUTSETA_API_SECRET } = process.env;
 
 function getAuthHeader() {
-  // Must follow Outseta documentation:
-  // Authorization: Outseta [API_KEY]:[API_SECRET]
+  // Outseta requires: Authorization: Outseta [API_KEY]:[API_SECRET]
   return `Outseta ${OUTSETA_API_KEY}:${OUTSETA_API_SECRET}`;
 }
 
@@ -27,12 +26,11 @@ async function updateTrustedSite(personId, trustedSite) {
 // Command-line interface
 // Usage: node updateTrustedSite.js <PersonID> <ReviewSite>
 (async () => {
-  const args = process.argv.slice(2);
-  if (args.length < 2) {
+  const [personId, reviewSite] = process.argv.slice(2);
+  if (!personId || !reviewSite) {
     console.error('Usage: node updateTrustedSite.js <PersonID> <ReviewSite>');
     process.exit(1);
   }
-  const [personId, reviewSite] = args;
   try {
     const res = await updateTrustedSite(personId, reviewSite);
     console.log('Update succeeded:', res.data.custom_fields.trustedsite);
