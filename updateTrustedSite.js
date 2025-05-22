@@ -1,12 +1,12 @@
 // updateTrustedSite.js
-require('dotenv').config();
+require('dotenv').config();             // Loads .env
 const axios = require('axios');
 
 const BASE_URL = 'https://api.outseta.com/api/v1';
 const { OUTSETA_API_KEY, OUTSETA_API_SECRET } = process.env;
 
 function getAuthHeader() {
-  // Uses documented format: Outseta API_KEY:API_SECRET
+  // Must match Outseta docs: "Authorization: Outseta [API_KEY]:[API_SECRET]"
   return `Outseta ${OUTSETA_API_KEY}:${OUTSETA_API_SECRET}`;
 }
 
@@ -24,13 +24,16 @@ async function updateTrustedSite(personId, trustedSite) {
   console.log('Update succeeded:', response.data.custom_fields.trustedsite);
 }
 
-// Example usage—replace with real Person ID and site:
+// Example usage—replace with your actual Person ID and site:
 (async () => {
-  const personId  = 'PERSON_ID_FROM_SIGNUP';
+  // Paste your ID from the URL fragment after '/people/'
+  // e.g. URL: https://critik.outseta.com/#/app/crm/people/jW7A5LZQ
+  const personId  = 'jW7A5LZQ';
   const reviewSite = 'Trustpilot';
+
   try {
     await updateTrustedSite(personId, reviewSite);
   } catch (err) {
-    console.error('Update failed:', err.response?.data || err.message);
+    console.error('Update failed:', err.response?.status, err.response?.data || err.message);
   }
 })();
