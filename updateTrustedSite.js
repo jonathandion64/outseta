@@ -2,7 +2,7 @@
 require('dotenv').config();             // Loads .env
 const axios = require('axios');
 
-const BASE_URL = 'https://api.outseta.com/api/v1';
+const BASE_URL = 'https://critik.outseta.com/api/v1';
 const { OUTSETA_API_KEY, OUTSETA_API_SECRET } = process.env;
 
 function getAuthHeader() {
