@@ -12,7 +12,7 @@ function getAuthHeader() {
 
 async function updateTrustedSite(personId, trustedSite) {
   const url = `${BASE_URL}/crm/people/${personId}`;
-  return axios.patch(
+  return axios.put(
     url,
     { custom_fields: { trustedsite: trustedSite } },
     { headers: {
