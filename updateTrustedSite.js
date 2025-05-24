@@ -34,17 +34,25 @@ const config = {
 // 3️⃣ Send the request
 axios(config)
   .then(response => {
-    // Inspect the full object to see where your field landed:
-    console.log(JSON.stringify(response.data, null, 2));
-    // Or just log the field:
-    console.log('Reviewsite now set to:', 
-      response.data.custom_fields?.reviewsite || 
-      response.data.CustomFields?.reviewsite
-    );
+    // 4️⃣ Parse the custom_fields string if necessary
+    let cf = response.data.custom_fields;
+    if (typeof cf === 'string') {
+      try {
+        cf = JSON.parse(cf);
+      } catch (err) {
+        console.warn('Could not parse custom_fields:', err);
+        cf = {};
+      }
+    }
+
+    // 5️⃣ Log the full response (for debugging) and the specific field
+    console.log('Full response:', JSON.stringify(response.data, null, 2));
+    console.log('Reviewsite now set to:', cf.reviewsite);
   })
   .catch(error => {
-    console.error('Update failed:', 
-      error.response?.status, 
+    console.error(
+      'Update failed:',
+      error.response?.status,
       error.response?.data || error.message
     );
   });
