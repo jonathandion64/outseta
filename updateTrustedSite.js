@@ -8,7 +8,7 @@ const { OUTSETA_API_KEY, OUTSETA_API_SECRET } = process.env;
 
 function getAuthHeader() {
   // Must use backticks for template literal:
-  return `Outseta ${OUTSETA_API_KEY}:${OUTSETA_API_SECRET}`;
+  return Outseta ${OUTSETA_API_KEY}:${OUTSETA_API_SECRET};
 }
 
 /**
